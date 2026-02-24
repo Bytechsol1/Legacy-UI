@@ -5,16 +5,19 @@ import { Button } from './ui/button';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '@/lib/utils';
 import logoImg from '@/assets/lg.png';
+import { useOdds } from '@/context/OddsContext';
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { oddsFormat, toggleOddsFormat } = useOdds();
 
-  const navItems = [
+  const navItems: { name: string; path: string; live?: boolean }[] = [
     { name: 'Sports', path: '/sports' },
     { name: 'Casino', path: '/casino' },
     { name: 'Live Casino', path: '/live-casino' },
     { name: 'VIP', path: '/vip' },
+    { name: 'Legacy TV', path: '/legacy-tv', live: true },
   ];
 
   return (
@@ -33,10 +36,11 @@ export const Navbar = () => {
                 key={item.name}
                 to={item.path}
                 className={cn(
-                  "text-sm font-medium transition-colors hover:text-legacy-gold-400 uppercase tracking-widest",
+                  "flex items-center gap-1.5 text-sm font-medium transition-colors hover:text-legacy-gold-400 uppercase tracking-widest",
                   location.pathname === item.path ? "text-legacy-gold-400" : "text-gray-300"
                 )}
               >
+                {item.live && <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />}
                 {item.name}
               </Link>
             ))}
@@ -50,6 +54,16 @@ export const Navbar = () => {
                 <span className="text-sm font-mono text-legacy-gold-400">$12,450.00</span>
               </div>
             </Link>
+            {/* Odds Format Toggle */}
+            <button
+              onClick={toggleOddsFormat}
+              title="Toggle odds format"
+              className="flex items-center gap-1 bg-legacy-green-800/50 border border-legacy-gold-500/20 hover:border-legacy-gold-500/50 rounded-full px-3 py-1.5 transition-colors"
+            >
+              <span className="text-[10px] font-extrabold uppercase tracking-widest text-legacy-gold-400">
+                {oddsFormat === 'american' ? 'AM' : 'DEC'}
+              </span>
+            </button>
             <Link to="/account">
               <Button variant="gold" size="sm" className="shadow-lg shadow-legacy-gold-500/20">
                 DEPOSIT

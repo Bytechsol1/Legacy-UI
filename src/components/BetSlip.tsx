@@ -1,4 +1,6 @@
 import { useBets } from '@/context/BetContext';
+import { useOdds } from '@/context/OddsContext';
+import { formatOdds } from '@/lib/odds';
 import { Button } from '@/components/ui/button';
 import { X, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -7,6 +9,7 @@ import { useState } from 'react';
 
 export const BetSlip = () => {
   const { bets, removeBet, updateStake, isOpen, toggleBetSlip, clearBets } = useBets();
+  const { oddsFormat } = useOdds();
   const [isMinimized, setIsMinimized] = useState(false);
 
   const totalStake = bets.reduce((acc, bet) => acc + (bet.stake || 0), 0);
@@ -63,7 +66,7 @@ export const BetSlip = () => {
                         <X className="h-3 w-3" />
                       </button>
                       <div className="pr-6">
-                        <div className="text-xs text-legacy-gold-400 font-bold mb-1">{bet.selection} @ {bet.odds}</div>
+                        <div className="text-xs text-legacy-gold-400 font-bold mb-1">{bet.selection} @ {formatOdds(bet.odds, oddsFormat)}</div>
                         <div className="text-xs text-gray-300 mb-2">{bet.matchName}</div>
                       </div>
                       <div className="flex items-center space-x-2">

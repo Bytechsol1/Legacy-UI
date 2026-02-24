@@ -1,6 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useBets } from '@/context/BetContext';
+import { useOdds } from '@/context/OddsContext';
+import { formatOdds } from '@/lib/odds';
 import React from 'react';
 
 export interface MatchProps {
@@ -15,6 +17,7 @@ export interface MatchProps {
 
 export const MatchCard: React.FC<{ match: MatchProps }> = ({ match }) => {
   const { addBet } = useBets();
+  const { oddsFormat } = useOdds();
 
   const handleBet = (selection: string, odds: number) => {
     addBet({
@@ -50,6 +53,7 @@ export const MatchCard: React.FC<{ match: MatchProps }> = ({ match }) => {
         </div>
 
         <div className="grid grid-cols-3 gap-3">
+          {/* Home */}
           <Button
             variant="outline"
             className="h-10 bg-legacy-green-900/50 border-legacy-green-700 hover:bg-legacy-gold-500 hover:text-legacy-black hover:border-legacy-gold-500 transition-all group/btn"
@@ -57,9 +61,11 @@ export const MatchCard: React.FC<{ match: MatchProps }> = ({ match }) => {
           >
             <span className="flex items-center justify-between w-full px-2">
               <span className="text-[10px] text-gray-500 group-hover/btn:text-legacy-black/60">1</span>
-              <span className="font-mono font-bold">{match.odds.home}</span>
+              <span className="font-mono font-bold">{formatOdds(match.odds.home, oddsFormat)}</span>
             </span>
           </Button>
+
+          {/* Draw */}
           <Button
             variant="outline"
             className="h-10 bg-legacy-green-900/50 border-legacy-green-700 hover:bg-legacy-gold-500 hover:text-legacy-black hover:border-legacy-gold-500 transition-all group/btn"
@@ -67,9 +73,11 @@ export const MatchCard: React.FC<{ match: MatchProps }> = ({ match }) => {
           >
             <span className="flex items-center justify-between w-full px-2">
               <span className="text-[10px] text-gray-500 group-hover/btn:text-legacy-black/60">X</span>
-              <span className="font-mono font-bold">{match.odds.draw}</span>
+              <span className="font-mono font-bold">{formatOdds(match.odds.draw, oddsFormat)}</span>
             </span>
           </Button>
+
+          {/* Away */}
           <Button
             variant="outline"
             className="h-10 bg-legacy-green-900/50 border-legacy-green-700 hover:bg-legacy-gold-500 hover:text-legacy-black hover:border-legacy-gold-500 transition-all group/btn"
@@ -77,7 +85,7 @@ export const MatchCard: React.FC<{ match: MatchProps }> = ({ match }) => {
           >
             <span className="flex items-center justify-between w-full px-2">
               <span className="text-[10px] text-gray-500 group-hover/btn:text-legacy-black/60">2</span>
-              <span className="font-mono font-bold">{match.odds.away}</span>
+              <span className="font-mono font-bold">{formatOdds(match.odds.away, oddsFormat)}</span>
             </span>
           </Button>
         </div>

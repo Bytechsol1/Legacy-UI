@@ -13,6 +13,7 @@ const sports = [
   { name: 'Cricket', icon: Trophy, path: '/sports/cricket' },
   { name: 'Football', icon: Trophy, path: '/sports/football' },
   { name: 'Basketball', icon: Trophy, path: '/sports/basketball' },
+  { name: 'Boxing', icon: Flame, path: '/sports/boxing', color: 'text-orange-400' },
   { name: 'MMA', icon: Swords, path: '/sports/mma' },
   { name: 'Taekwondo', icon: Target, path: '/sports/taekwondo' },
   { name: 'Karate', icon: Target, path: '/sports/karate' },
